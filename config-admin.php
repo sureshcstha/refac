@@ -118,3 +118,30 @@ echo <<<EOT
   </html>
 EOT;
 }
+
+// Feedback object
+class UserFeedback {
+  public $msg; 
+  public $route; 
+
+  // Setter
+  public function set_feedback($msg, $route) {
+    $this->msg = $msg; 
+    $this->route = $route;
+  }
+
+  // function to display feedback message
+  public function display_feedback()
+  {
+    echo <<<EOT
+    <div class="notification is-success">
+      <h2 class="title is-3"> $this->msg Redirecting in 3 seconds.</h2>
+    </div>
+    EOT;
+    header("Refresh:3; url=" . $this->route . ".php");
+  }
+
+}
+
+// Instantiating global feedback object
+$feedback = new UserFeedback(); 

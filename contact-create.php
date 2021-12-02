@@ -20,6 +20,7 @@ if(!empty($_POST)){
 
     $msg = 'New contact created successfully.';
     // header('Location: contacts.php');
+    $feedback->set_feedback($msg, 'contacts'); 
 
 }
 
@@ -28,14 +29,13 @@ if(!empty($_POST)){
 <?= template_header('Create Contact') ?>
 <?= template_nav('Site Title') ?>
 
+    <!-- feedback message -->
+    <?php if ($feedback->msg and $feedback->route) : ?>
+        <?= $feedback->display_feedback() ?>
+    <?php endif; ?>
+    
     <!-- START PAGE CONTENT -->
     <h1 class="title">Create a New Contact</h1>
-
-    <?php if ($msg): ?>
-        <div class="notification is-success">
-            <h2 class="title is-2"><?= $msg; ?></h2>
-        </div>
-    <?php endif; ?>
     <form action="" method="post">
         <div class="field">
             <label class="label">Name</label>

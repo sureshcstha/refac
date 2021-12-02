@@ -27,7 +27,8 @@ if(!empty($_POST)){
         // add the answers to the answers table
         $stmt = $pdo->prepare("INSERT INTO poll_answers VALUES (NULL, ?, ?, 0)");
         $stmt->execute([$poll_id, $answer]);
-        $msg = "Poll created successfully";
+        $msg = "Poll created successfully.";
+        $feedback->set_feedback($msg, 'polls'); 
     }
 }
 
@@ -36,14 +37,13 @@ if(!empty($_POST)){
 <?= template_header('Create Poll') ?>
 <?= template_nav('Site Title') ?>
 
+    <!-- feedback message -->
+    <?php if ($feedback->msg and $feedback->route) : ?>
+        <?= $feedback->display_feedback() ?>
+    <?php endif; ?>
+
     <!-- START PAGE CONTENT -->
     <h1 class="title">Create Poll</h1>
-
-    <?php if ($msg): ?>
-        <div class="notification is-success">
-            <h2 class="title is-2"><?= $msg; ?></h2>
-        </div>
-    <?php endif; ?>
     <form action="" method="post">
         <div class="field">
             <label class="label">Title</label>

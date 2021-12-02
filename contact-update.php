@@ -28,6 +28,7 @@ if (isset($_GET['id'])) {
         $stmt = $pdo->prepare('UPDATE contacts SET id = ?, name = ?, email = ?, phone = ?, title = ?, created = ? WHERE id = ?');
         $stmt->execute([$id, $name, $email, $phone, $title, $created, $id]);
         $msg = 'Contact updated successfully.';
+        $feedback->set_feedback($msg, 'contacts'); 
         // header('Location: contacts.php');
     }
 } else {
@@ -38,14 +39,14 @@ if (isset($_GET['id'])) {
 <?= template_header('Contact Update') ?>
 <?= template_nav('Site Title') ?>
 
-    <!-- START PAGE CONTENT -->
-    <h1 class="title">Contact Update</h1>
-    <?php if ($msg): ?>
-        <div class="notification is-success">
-            <h2 class="title is-2"><?= $msg; ?></h2>
-        </div>
+    <!-- feedback message -->
+    <?php if ($feedback->msg and $feedback->route) : ?>
+        <?= $feedback->display_feedback() ?>
     <?php endif; ?>
 
+
+    <!-- START PAGE CONTENT -->
+    <h1 class="title">Contact Update</h1>
     <form action="contact-update.php?id=<?= $contact['id'] ?>" method="post">
         <div class="field">
             <label class="label">Name</label>

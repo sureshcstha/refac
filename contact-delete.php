@@ -23,6 +23,7 @@ if (isset($_GET['id'])) {
 
             // output success message
             $msg = "You have deleted the contact!";
+            $feedback->set_feedback($msg, 'contacts'); 
         } else {
             // redirect to the contacts page
             header("Location: contacts.php");
@@ -39,14 +40,13 @@ if (isset($_GET['id'])) {
 <?= template_header('Delete Contact') ?>
 <?= template_nav('Site Title') ?>
 
+    <!-- feedback message -->
+    <?php if ($feedback->msg and $feedback->route) : ?>
+        <?= $feedback->display_feedback() ?>
+    <?php endif; ?>
+
     <!-- START PAGE CONTENT -->
     <h1 class="title">Delete Contact</h1>
-    <?php if ($msg): ?>
-        <div class="notification is-success">
-            <h2 class="title is-2"><?= $msg; ?></h2>
-        </div>
-    <?php endif; ?>
-    
     <h2 class="subtitle">Are you sure you want to delete contact number: <?= $contact['id'] ?></h2>
     <a href="contact-delete.php?id=<?= $contact['id'] ?>&confirm=yes" class="button is-danger">Yes</a>
     <a href="contact-delete.php?id=<?= $contact['id'] ?>&confirm=no" class="button is-success">No</a>
